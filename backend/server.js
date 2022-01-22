@@ -1,12 +1,12 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const connectDB = require("./config/db");
-const messageRouter = require("./routes/messageRoute");
 const Pusher = require("pusher");
 const cors=require('cors');
 
 // dotenv.config({path:'./config/config.env'})
+const messageRouter = require("./routes/messageRoute");
+const roomRouter=require('./routes/roomRoute.js')
 
 connectDB();
 
@@ -55,6 +55,7 @@ app.use((req,res,next)=>{
 })
 
 app.use("/api/v1/message", messageRouter);
+app.use("/api/v1/room", roomRouter);
 
 app.listen(port, () => console.log(`Listening on ${port}`));
 
