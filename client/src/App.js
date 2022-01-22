@@ -12,6 +12,7 @@ function App() {
   const [showStarter, setShowStarter] = useState(true);
   const [roomName, setRoomName] = useState("");
   const [roomId, setRoomId] = useState("");
+  const [roomUrl, setRoomUrl] = useState("");
 
   useEffect(() => {
     var pusher = new pusherJs("2569c0364b70125dae1f", {
@@ -38,13 +39,14 @@ function App() {
     const data = response.data;
     setMessage(data.messages);
     setRoomName(data.name);
+    setRoomUrl(data.avatarUrl);
   };
   return (
     <div className="app">
       <div className="app__body">
         <Sidebar onLoadMessage={loadMessageHandler} />
         {!showStarter ? (
-          <Chat messages={message} roomName={roomName} roomId={roomId} />
+          <Chat messages={message} roomName={roomName} roomId={roomId} url={roomUrl} />
         ) : (
           <Starter />
         )}

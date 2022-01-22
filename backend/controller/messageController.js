@@ -7,7 +7,7 @@ exports.postMessage = async (req, res) => {
     const messageBody = new messageModel(req.body);
     await messageBody.save();
     const room=await roomModel.findById(roomId);
-    room.roomName.messages.unshift(messageBody);
+    room.roomName.messages.push(messageBody);
     await room.save();
     res.status(200).json(messageBody);
   } catch (err) {

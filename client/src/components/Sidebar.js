@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import pusherJs from "pusher-js";
+
 import AddRoom from "./AddRoom";
 import "./Sidebar.css";
 import SidebarChat from "./SidebarChat";
@@ -7,6 +9,7 @@ import SidebarChat from "./SidebarChat";
 function Sidebar(props) {
   const [showNewRoom, setShowNewRoom] = useState(false);
   const [roomDetails, setRoomDetails] = useState([]);
+
   useEffect(() => {
     const loadRooms = async () => {
       const response = await axios.get("http://localhost:9000/api/v1/room");
@@ -15,6 +18,23 @@ function Sidebar(props) {
     };
     loadRooms();
   }, []);
+
+  useEffect(() => {
+    var pusher = new pusherJs("2569c0364b70125dae1f", {
+      cluster: "ap2",
+    });
+
+    var channel = pusher.subscribe("rooms");
+    channel.bind("insert", (data) => {
+      setRoomDetails([...roomDetails, data]);
+    });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  }, [roomDetails]);
+
 
   // const getLastMessage=async(messageId)=>{
   //   const response = await axios.get(`http://localhost:9000/api/v1/message/${messageId.toString()}`);
@@ -60,6 +80,7 @@ function Sidebar(props) {
           <SidebarChat
           onClick={toggleRoomsHandler}
             key={room._id}
+            avatarUrl={room.roomName.avatarUrl}
             name={room.roomName.name}
             value={room._id}
             lastMessage={

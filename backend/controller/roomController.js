@@ -4,7 +4,7 @@ const roomModel = require("../models/roomModel");
 exports.getOneRoom = async (req, res) => {
   try {
     const roomId = req.params.roomId;
-    const room = await roomModel.findById(roomId).exec();
+    const room = await roomModel.findById(roomId);
     const roomDetails = await room.roomName.populate("messages");
     res.status(200).json(roomDetails);
   } catch (err) {
@@ -16,9 +16,11 @@ exports.getOneRoom = async (req, res) => {
 exports.createRoom = async (req, res) => {
   try {
     const roomName = req.body.name;
+    const url = req.body.url;
     const newRoom = new roomModel({
       roomName: {
         name: roomName,
+        avatarUrl:url,
         message: [],
       },
     });

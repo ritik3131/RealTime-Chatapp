@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const RoomSchema = Schema({
   roomName: {
     name: String,
+    avatarUrl: String,
     messages: [{ type: Schema.Types.ObjectId, ref: "message" }],
   },
 });

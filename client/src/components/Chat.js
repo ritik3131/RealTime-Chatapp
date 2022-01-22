@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import "./Chat.css";
 
-function Chat({ messages ,roomName ,roomId}) {
+function Chat({ messages ,roomName ,roomId ,url}) {
   const [input,setInput]=useState("");
   const sendMessageHandler=async(event)=>{
     event.preventDefault();
@@ -20,7 +20,7 @@ function Chat({ messages ,roomName ,roomId}) {
     <div className="chat">
       <div className="chat__header">
         <img
-          src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+          src={url}
           alt="Avatar"
           className="avatar"
         />
