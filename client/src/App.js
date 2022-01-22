@@ -5,16 +5,21 @@ import axios from "axios";
 import "./App.css";
 import Chat from "./components/Chat";
 import Sidebar from "./components/Sidebar";
+import Starter from "./components/Starter";
 
 function App() {
   const [message, setMessage] = useState([]);
+  const [showStarter, setShowStarter] = useState(true);
+  const [roomName, setRoomName] = useState("");
+  const [roomId, setRoomId] = useState("");
+
   useEffect(() => {
-    var pusher = new pusherJs(process.env.PUSHER_KEY, {
-      cluster: process.env.PUSHER_SECRET,
+    var pusher = new pusherJs("2569c0364b70125dae1f", {
+      cluster: "ap2",
     });
 
     var channel = pusher.subscribe("messages");
-    channel.bind("insert",(data)=> {
+    channel.bind("insert", (data) => {
       setMessage([...message, data]);
     });
 
@@ -23,23 +28,26 @@ function App() {
       channel.unsubscribe();
     };
   }, [message]);
-  useEffect(() => {
-    const loadMessage = async () => {
-      const response = await axios.get(
-        "http://localhost:9000/api/v1/message/getMessage"
-      );
-      const data = response.data;
-      setMessage(data);
-    };
 
-    loadMessage();
-  }, []);
-
+  const loadMessageHandler = async (roomId) => {
+    setShowStarter(false);
+    setRoomId(roomId);
+    const response = await axios.get(
+      `http://localhost:9000/api/v1/room/${roomId}`
+    );
+    const data = response.data;
+    setMessage(data.messages);
+    setRoomName(data.name);
+  };
   return (
     <div className="app">
       <div className="app__body">
-        <Sidebar />
-        <Chat messages={message}/>
+        <Sidebar onLoadMessage={loadMessageHandler} />
+        {!showStarter ? (
+          <Chat messages={message} roomName={roomName} roomId={roomId} />
+        ) : (
+          <Starter />
+        )}
       </div>
     </div>
   );

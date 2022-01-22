@@ -2,13 +2,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import "./Chat.css";
 
-function Chat({ messages }) {
+function Chat({ messages ,roomName ,roomId}) {
   const [input,setInput]=useState("");
   const sendMessageHandler=async(event)=>{
     event.preventDefault();
-    console.log(input);
     const data=input;
-    await axios.post( "http://localhost:9000/api/v1/message/new",{
+    await axios.post( `http://localhost:9000/api/v1/message/${roomId}/new`,{
       name:"Ritik",
       message:data,
       timestamp:new Date().toISOString(),
@@ -26,18 +25,18 @@ function Chat({ messages }) {
           className="avatar"
         />
         <div className="chat__headerInfo">
-          <h3>Room name</h3>
+          <h3>{roomName}</h3>
           <p>Last seen...</p>
         </div>
         <div className="chat__headerRight">
-          <i class="fa fa-search"></i>
-          <i class="material-icons">attachment</i>
+          <i className="fa fa-search"></i>
+          <i className="material-icons">attachment</i>
           <i className="material-icons">more_vert</i>
         </div>
       </div>
       <div className="chat__body">
-        {messages.map((message) => (
-          <p className={`chat__message ${message.received&&"chat__received"}`}>
+        {messages && messages.map((message) => (
+          <p className={`chat__message ${message.received&&"chat__received"}`} key={message._id}>
             <span className="chat__name">{message.name}</span>{message.message}
             <span className="chat__timestamp">{message.timestamp}</span>
           </p>
@@ -50,7 +49,7 @@ function Chat({ messages }) {
           <input value={input} onChange={e=>{setInput(e.target.value)}} type="text" placeholder="Type a meesage" />
           <button type="submit">Send a message</button>
         </form>
-        <i class="fa fa-microphone"></i>
+        <i className="fa fa-microphone"></i>
       </div>
     </div>
   );

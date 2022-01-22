@@ -20,8 +20,18 @@ exports.getMessage=async(req,res)=>{
     try{
         const message=await messageModel.find();
         res.status(200).json(message);
-    }catch{
+    }catch(err){
         console.log(err);
         res.status(500).send(err);
     }
 }
+exports.getOneMessage=async(req,res)=>{
+  try{
+      const message=await messageModel.find(req.params.messageId);
+      res.status(200).json(message);
+  }catch(err){
+      console.log(err);
+      res.status(500).send(err);
+  }
+}
+
