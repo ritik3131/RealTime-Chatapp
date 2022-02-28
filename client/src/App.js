@@ -41,12 +41,22 @@ function App() {
     setRoomName(data.name);
     setRoomUrl(data.avatarUrl);
   };
+
+  const signInHandler = async () => {
+    await axios.get(`http://localhost:9000/auth/google`);
+  };
   return (
     <div className="app">
+      <button onClick={signInHandler}>Sign In</button>
       <div className="app__body">
         <Sidebar onLoadMessage={loadMessageHandler} />
         {!showStarter ? (
-          <Chat messages={message} roomName={roomName} roomId={roomId} url={roomUrl} />
+          <Chat
+            messages={message}
+            roomName={roomName}
+            roomId={roomId}
+            url={roomUrl}
+          />
         ) : (
           <Starter />
         )}

@@ -35,7 +35,6 @@ function Sidebar(props) {
     };
   }, [roomDetails]);
 
-
   // const getLastMessage=async(messageId)=>{
   //   const response = await axios.get(`http://localhost:9000/api/v1/message/${messageId.toString()}`);
   //   const data = response.data;
@@ -45,9 +44,9 @@ function Sidebar(props) {
     setShowNewRoom((prevState) => !prevState);
   };
 
-  const toggleRoomsHandler=(event)=>{
+  const toggleRoomsHandler = (event) => {
     props.onLoadMessage(event.target.id);
-  }
+  };
 
   return (
     <div className="sidebar">
@@ -78,15 +77,15 @@ function Sidebar(props) {
       <div className="sidebar__chat">
         {roomDetails.map((room) => (
           <SidebarChat
-          onClick={toggleRoomsHandler}
+            onClick={toggleRoomsHandler}
             key={room._id}
             avatarUrl={room.roomName.avatarUrl}
             name={room.roomName.name}
             value={room._id}
             lastMessage={
-              room.roomName.messages.length == 0
-                //getLastMessage( room.roomName.messages[0])
-                && "No chat yet"
+              room.roomName.messages.length == 0 &&
+              //getLastMessage( room.roomName.messages[0])
+              "No chat yet"
             }
           />
         ))}

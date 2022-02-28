@@ -9,10 +9,18 @@
   "author": "Ritik",
   "license": "ISC",
   "dependencies": {
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
+    "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
-    "dotenv": "^14.2.0",
+    "dotenv": "^14.3.2",
     "express": "^4.17.2",
+    "express-session": "^1.17.2",
     "mongoose": "^6.1.7",
+    "passport": "^0.5.2",
+    "passport-google-oauth2": "^0.2.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-google-oidc": "^0.1.0",
     "pusher": "^5.0.0"
   }
 }
