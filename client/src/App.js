@@ -6,6 +6,7 @@ import "./App.css";
 import Chat from "./components/Chat";
 import Sidebar from "./components/Sidebar";
 import Starter from "./components/Starter";
+import Login from "./components/Login";
 
 function App() {
   const [message, setMessage] = useState([]);
@@ -42,12 +43,9 @@ function App() {
     setRoomUrl(data.avatarUrl);
   };
 
-  const signInHandler = async () => {
-    await axios.get(`http://localhost:9000/auth/google`);
-  };
   return (
     <div className="app">
-      <button onClick={signInHandler}>Sign In</button>
+      <Login/>
       <div className="app__body">
         <Sidebar onLoadMessage={loadMessageHandler} />
         {!showStarter ? (

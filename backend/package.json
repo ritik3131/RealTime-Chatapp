@@ -16,6 +16,7 @@
     "dotenv": "^14.3.2",
     "express": "^4.17.2",
     "express-session": "^1.17.2",
+    "google-auth-library": "^7.14.0",
     "mongoose": "^6.1.7",
     "passport": "^0.5.2",
     "passport-google-oauth2": "^0.2.0",

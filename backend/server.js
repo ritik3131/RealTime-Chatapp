@@ -3,12 +3,10 @@ const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const Pusher = require("pusher");
 const cors = require("cors");
-const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
 const cookieParser = require("cookie-parser");
-var cookieSession = require('cookie-session');
 
 require("dotenv").config();
 
@@ -17,7 +15,6 @@ const roomRouter = require("./routes/roomRoute.js");
 const authRouter = require("./routes/authRoute");
 
 connectDB();
-require("./config/passport")(passport);
 
 const port = process.env.PORT || 9000;
 
@@ -67,6 +64,13 @@ db.once("open", async () => {
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 app.use(function (req, res, next) {
@@ -76,29 +80,28 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
-
-app.use(cookieParser('random')) ;
-app.use(cookieSession({
-  keys: ['key1', 'key2']
-}));
+app.use(cookieParser("mySecretKey"));
 app.use(
   session({
-    secret: "whatsapp_clone",
-    resave: true,
-    saveUninitialized: true,
+    secret: "secretsssss",
+    rolling: false,
+    resave: false,
+    saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URL,
     }),
+    cookie: {
+      secure:false,
+      sameSite: false, // i think this is default to false
+      maxAge: 60 * 60 * 1000,
+    },
   })
 );
 
-//Passwort Middleware
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/room", roomRouter);
-app.use("/", authRouter);
+app.use("/api/vi/google", authRouter);
 
 app.listen(port, () => console.log(`Listening on ${port}`));
 
