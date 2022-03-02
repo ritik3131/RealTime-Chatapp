@@ -1,13 +1,16 @@
 const { OAuth2Client } = require("google-auth-library");
+const mongoose = require("mongoose");
 const userModel = require("../models/userModel");
 
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
 exports.getCurrentUser = async (req, res) => {
-  // const data = req.user;
-  console.log(process.env.CLIENT_ID);
-  // console.log("user", req.isAuthenticated(), req.session);
-  // res.status(200).json(data);
+  const data = req.user;
+  if (data)
+    res
+      .status(200)
+      .json({ name: data.name, mailId: data.mailId, isAuth: true });
+  else res.status(200).json({ isAuth: false });
 };
 
 exports.googleLogin = async (req, res) => {
@@ -16,13 +19,17 @@ exports.googleLogin = async (req, res) => {
     idToken: tokenId,
     requiredAudience: process.env.CLIENT_ID,
   });
+
   try {
     const { email_verified, name, email, picture } = response.payload;
     if (email_verified) {
-      const user=await userModel.findOne({ mailId: email }).exec();
+      req.session.isAuthenticated = true;
+      const user = await userModel.findOne({ mailId: email }).exec();
       if (user) {
         const { name, mailId } = user;
-       return res.status(200).json( { name, mailId });
+        req.session.user = user;
+        req.session.save();
+        return res.status(200).json({ name, mailId, isAuth: true });
       } else {
         const newUser = new userModel({
           name,
@@ -30,16 +37,20 @@ exports.googleLogin = async (req, res) => {
           image: picture,
         });
         await newUser.save();
-        return res.status(200).json({name, mailId: email  });
+        req.session.user = newUser;
+        req.session.save();
+        return res.status(200).json({ name, mailId: email, isAuth: true });
       }
     } else {
       return res.status(400).json({
-        error: "Something went wrong",
+        message: "Something went wrong",
+        isAuth: true,
       });
     }
   } catch (err) {
     return res.status(400).json({
-      error: "Something went wrong",
+      message: "Something went wrong",
+      isAuth: true,
     });
   }
 };

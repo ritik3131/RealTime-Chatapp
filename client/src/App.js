@@ -7,6 +7,9 @@ import Chat from "./components/Chat";
 import Sidebar from "./components/Sidebar";
 import Starter from "./components/Starter";
 import Login from "./components/Login";
+import { useDispatch, useSelector } from "react-redux";
+import Logout from "./components/Logout";
+import { userAction } from "./store";
 
 function App() {
   const [message, setMessage] = useState([]);
@@ -14,6 +17,8 @@ function App() {
   const [roomName, setRoomName] = useState("");
   const [roomId, setRoomId] = useState("");
   const [roomUrl, setRoomUrl] = useState("");
+  const isAuth = useSelector((state) => state.user.isAuth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     var pusher = new pusherJs("2569c0364b70125dae1f", {
@@ -31,6 +36,16 @@ function App() {
     };
   }, [message]);
 
+  // const getCurrentUser = async () => {
+  //   const response = await axios.get(
+  //     "http://localhost:9000/api/v1/message/user"
+  //   );
+  //   const data = response.data;
+  //   console.log(data);
+  //   if (data.isAuth)
+  //     dispatch(userAction.login({ name: data.name, mailId: data.mailId }));
+  // };
+
   const loadMessageHandler = async (roomId) => {
     setShowStarter(false);
     setRoomId(roomId);
@@ -42,23 +57,36 @@ function App() {
     setRoomName(data.name);
     setRoomUrl(data.avatarUrl);
   };
+  // const {isAuthLocal,name,mailId} = JSON.parse(localStorage.getItem('isAuth'));
+  const LocalStorage = localStorage.getItem("isAuth");
+  if (LocalStorage) {
+    const { isAuthLocal, name, mailId } = JSON.parse(LocalStorage);
+    console.log({ isAuthLocal, name, mailId });
+    dispatch(userAction.login({ isAuth: isAuthLocal, name, mailId }));
+  }
 
   return (
     <div className="app">
-      <Login/>
-      <div className="app__body">
-        <Sidebar onLoadMessage={loadMessageHandler} />
-        {!showStarter ? (
-          <Chat
-            messages={message}
-            roomName={roomName}
-            roomId={roomId}
-            url={roomUrl}
-          />
-        ) : (
-          <Starter />
-        )}
-      </div>
+      {!isAuth && <Login />}
+      {isAuth && (
+        <>
+          {" "}
+          <Logout />
+          <div className="app__body" style={{ marginTop: "-2rem" }}>
+            <Sidebar onLoadMessage={loadMessageHandler} />
+            {!showStarter ? (
+              <Chat
+                messages={message}
+                roomName={roomName}
+                roomId={roomId}
+                url={roomUrl}
+              />
+            ) : (
+              <Starter />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

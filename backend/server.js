@@ -89,6 +89,7 @@ app.use(
     saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URL,
+      collectionName:'sessions'
     }),
     cookie: {
       secure:false,
@@ -98,6 +99,19 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  //console.log("session ",req.session);
+  if (!req.session.user) return next();
+  User.findById(req.session.user._id)
+    .then((user) => {
+      console.log("user",user)
+      req.user = user;
+      next();
+    })
+    .catch((err) => {
+      next(new Error(err));
+    });
+});
 
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/room", roomRouter);

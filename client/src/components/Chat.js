@@ -1,14 +1,16 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import "./Chat.css";
 
 function Chat({ messages, roomName, roomId, url }) {
   const [input, setInput] = useState("");
+  const userName=useSelector(state=>state.user.name)
   const sendMessageHandler = async (event) => {
     event.preventDefault();
     const data = input;
     await axios.post(`http://localhost:9000/api/v1/message/${roomId}/new`, {
-      name: "Ritik",
+      name: userName,
       message: data,
       timestamp: new Date().toISOString(),
       received: true,
@@ -35,7 +37,7 @@ function Chat({ messages, roomName, roomId, url }) {
           messages.map((message) => (
             <p
               className={`chat__message ${
-                message.received && "chat__received"
+                message.name===userName && "chat__received"
               }`}
               key={message._id}
             >
