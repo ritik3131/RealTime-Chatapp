@@ -2,7 +2,7 @@
 
 This is a chatApp(whatsapp clone) which uses MERN stack and pusher.js for making MongoDb live time.
 ## 🔗 Links
-[website with google oauth](https://tender-darwin-1f9f94.netlify.app/)
+[website with google oauth](https://mern-gossip.netlify.app/)
 
 [website ](https://mern-forbidden.herokuapp.com/)
 
