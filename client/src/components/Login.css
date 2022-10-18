@@ -1,0 +1,10 @@
+.loginTitle{
+	font-size:40px;
+	font-family: 'Arvo', serif;
+	margin:0px;
+}
+
+GoogleLogin{
+	position:absolute;
+	bottom:100px;
+}

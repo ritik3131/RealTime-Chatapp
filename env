@@ -1,0 +1,9 @@
+MONGODB_URL=mongodb+srv://ritik:ritik@cluster0.g4ehi.mongodb.net/WhatsappClone?retryWrites=true&w=majority
+PUSHER_APPID=1335521
+PUSHER_CLUSTER=ap2
+PUSHER_KEY=2569c0364b70125dae1f
+PUSHER_SECRET=1e17461fe82dcf840578
+CLIENT_SCERET=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
+CLIENT_ID=464107833749-6lmogcd5382qg3738a347ggu7nu08fus.apps.googleusercontent.com
+FRONTEND_HOST=http://localhost:3000
+

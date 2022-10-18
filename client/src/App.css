@@ -1,16 +1,33 @@
-.app{
-  display: grid;
-  place-items: center;
-  height: 100vh;
-  background-color: #dadbd3;
+.app {
+    display: grid;
+    height: 120vh;
+	place-items: center;
+    background-image: url("../public/loginBackgroung");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
-.app__body{
-  display: flex;
-  background-color: #ededed;
-  margin-top: -50px;
-  height: 90vh;
-  width: 90vw;
-  margin-top: 1rem;
+.app__body {
+    display: flex;
+    background-color: #ededed;
+    margin-top: 20px;
+    height: 90vh;
+    width: 90vw;
+    margin-top: 1rem;
+    box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
+    border-radius: 30px;
+}
 
-  box-shadow: -1px 4px 20px -6px rgba(0,0,0,0.75);
+footer {
+    text-align: center;
+    padding: 10px;
+    border: 10px;
+    color: black;
+}
+Logut {
+    padding: 30px;
+    margin: 30px;
+}
+
+Login{
 }

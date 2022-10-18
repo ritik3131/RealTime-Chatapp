@@ -43,6 +43,16 @@
     overflow: auto;
 }
 
+
+@keyframes messageAnimation {
+  0%   {transform:scale(0.1,0.1);
+		margin-top:100px;
+  }
+  100% {transform:scale(1,1);
+		margin-top:0px;		
+  }
+}
+
 .chat__message{
     position: relative;
     font-size: 16px;
@@ -51,6 +61,8 @@
     border-radius: 10px;
     background-color: #ffffff;
     margin-bottom: 30px;
+	animation-name:messageAnimation;
+	animation-duration:0.4s;
 }
 
 .chat__timestamp{
@@ -74,6 +86,7 @@
     align-items: center;
     height: 62px;
     border-top: 1px solid lightgray;
+
 }
 .chat__footer > form{
     flex:1;
@@ -81,18 +94,30 @@
 }
 
 .chat__footer > form > input{
-    flex:1;
+    flex:0.93;
     border-radius: 30px;
     padding: 10px;
     border: none;
+	border-radius:10px;
+	margin:auto;
+	align-items:center;
+	
 }
 
 .chat__footer > form > button{
     display: none;
+	padding-left:30px;
 }
 .chat__footer i{
     color: gray;
-    padding: 10px;
     font-size: 24px;
+
 }
 
+.microphone{
+	margin-right:20px;
+}
+
+.chat__footer > .emoji {
+	margin:0 0 0 10px;
+}

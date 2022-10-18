@@ -1,3 +1,5 @@
+import "./Login.css"
+
 import axios from "axios";
 import React from "react";
 import { GoogleLogin } from "react-google-login";
@@ -25,6 +27,7 @@ function Login() {
     "464107833749-6lmogcd5382qg3738a347ggu7nu08fus.apps.googleusercontent.com";
   return (
     <>
+	  <h1 className="loginTitle" >RealTime-ChatApp</h1>
       <GoogleLogin
         clientId={clientId}
         buttonText="Login with Google"
