@@ -8,7 +8,7 @@
     text-align: center;
     flex-direction: column;
     flex: 0.65;
-
+	border-radius:30px;
     flex: 1;
     background-image: url('https://img.buzzfeed.com/buzzfeed-static/static/2018-04/13/12/asset/buzzfeed-prod-web-03/sub-buzz-8755-1523636113-1.jpg?output-quality=auto&output-format=auto&downsize=640:*');
     background-repeat: repeat;

@@ -49,7 +49,7 @@ function Chat({ messages, roomName, roomId, url }) {
       </div>
 
       <div className="chat__footer">
-        <i className="fa fa-smile-o"></i>
+        <i className=" emoji fa fa-smile-o"></i>
         <form onSubmit={sendMessageHandler}>
           <input
             value={input}
@@ -61,7 +61,7 @@ function Chat({ messages, roomName, roomId, url }) {
           />
           <button type="submit">Send a message</button>
         </form>
-        <i className="fa fa-microphone"></i>
+        <i className="microphone fa fa-microphone"></i>
       </div>
     </div>
   );

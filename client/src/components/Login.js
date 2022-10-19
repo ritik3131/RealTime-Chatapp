@@ -1,3 +1,5 @@
+import "./Login.css"
+
 import axios from "axios";
 import React from "react";
 import { GoogleLogin } from "react-google-login";
@@ -24,15 +26,20 @@ function Login() {
     process.env.REACT_APP_CLIENT_ID ||
     "464107833749-6lmogcd5382qg3738a347ggu7nu08fus.apps.googleusercontent.com";
   return (
-    <>
+    <div classname="loginScreen">
+	  
+	  <h1 className="loginTitle" >RealTime-ChatApp</h1>
+	  <div className="loginButton">
       <GoogleLogin
         clientId={clientId}
         buttonText="Login with Google"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
         cookiePolicy={"single_host_origin"}
+	  className="googleLoginButton"
       />
-    </>
+	  </div>
+    </div>
   );
 }
 
