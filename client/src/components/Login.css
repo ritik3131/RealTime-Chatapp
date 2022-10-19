@@ -1,10 +1,27 @@
-.loginTitle{
-	font-size:40px;
-	font-family: 'Arvo', serif;
-	margin:0px;
+.loginScreen{
+	margin-top:100px;
+	padding-top:100px;
 }
 
-GoogleLogin{
-	position:absolute;
-	bottom:100px;
+
+
+.loginTitle{
+	font-size:50px;
+	font-family: 'Arvo', serif;
+	color:lightBlue;
+	margin:23vh 0px 20vh 5px;
+	text-align:center;
+}
+
+
+
+.loginButton{
+	margin:auto;
+	align-items:center;
+	justify-content:space-around;
+	text-align:center;
+}
+
+.googleLoginButton{
+	margin-left:9vw;
 }

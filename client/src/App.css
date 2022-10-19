@@ -1,11 +1,12 @@
 .app {
     display: grid;
     height: 120vh;
-	place-items: center;
-    background-image: url("../public/loginBackgroung");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+	/* place-items: center; */
+	background-color:blue;
+	background-image:url("../public/loginBackgroung");
+	background-position:center;
+	background-repeat:no-repeat;
+	background-size:cover;
 }
 .app__body {
     display: flex;
@@ -29,5 +30,4 @@ Logut {
     margin: 30px;
 }
 
-Login{
-}
+
