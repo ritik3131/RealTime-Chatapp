@@ -1,6 +1,7 @@
 .loginScreen{
 	margin-top:100px;
 	padding-top:100px;
+	padding-bottom:50px
 }
 
 
@@ -15,13 +16,6 @@
 
 
 
-.loginButton{
-	margin:auto;
-	align-items:center;
-	justify-content:space-around;
-	text-align:center;
-}
-
 .googleLoginButton{
-	margin-left:9vw;
+	margin-left:16vw;
 }
