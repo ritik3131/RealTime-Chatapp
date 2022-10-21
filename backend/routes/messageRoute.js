@@ -7,25 +7,57 @@ const {
 } = require("../controller/messageController");
 const { getCurrentUser } = require("../controller/userController");
 
-const multer = require('multer');
+let fileType = "image";
 
-const fileStorageEngine = multer.diskStorage({
+
+const multer = require("multer");
+
+const fileStorageEngineImage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, "../uploads");
+        callback(null, `../uploads/image`);
     },
-	
+
     filename: (req, file, callback) => {
         callback(null, Date.now() + "--" + file.originalname);
     },
 });
 
-const upload = multer({ storage: fileStorageEngine });
+const fileStorageEngineVideo = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, `../uploads/video`);
+    },
+
+    filename: (req, file, callback) => {
+        callback(null, Date.now() + "--" + file.originalname);
+    },
+});
+
+const fileStorageEnginePdf = multer.diskStorage({
+
+    destination: (req, file, callback) => {
+        callback(null, `../uploads/pdf`);
+    },
+
+    filename: (req, file, callback) => {
+        callback(null, Date.now() + "--" + file.originalname);
+    },
+});
+
+
+
+const uploadImage = multer({ storage: fileStorageEngineImage });
+const uploadVideo = multer({ storage: fileStorageEngineVideo });
+const uploadPdf = multer({ storage: fileStorageEnginePdf });
 
 const router = express.Router();
 
 router.post("/:roomId/new", postMessage);
-router.post("/:roomId/uploadFile", upload.single("image"), uploadFile);
+console.log("Before");
+router.post("/:roomId/uploadFile/image",uploadImage.single("image"), uploadFile);
+router.post("/:roomId/uploadFile/video", uploadVideo.single("video"), uploadFile);
+router.post("/:roomId/uploadFile/pdf", uploadPdf.single("pdf"), uploadFile);
 
+console.log("After");
 
 router.get("/:roomId/getMessage", getMessage);
 router.get("/user", getCurrentUser);

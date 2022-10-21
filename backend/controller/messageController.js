@@ -19,15 +19,18 @@ exports.postMessage = async (req, res) => {
 
 exports.uploadFile = async (req, res) => {
     try {
-		console.log(req.params.roomId);
+
+		// console.log("backend:",req.file);
         const roomId = req.params.roomId;
         const messageBody = new messageModel(req.body);
         await messageBody.save();
         const room = await roomModel.findById(roomId);
         room.roomName.messages.push(messageBody);
         await room.save();
-        res.status(200).json(`File Uploaded ${req.file}`);
-    } catch (err) {}
+        res.status(200).json(`File Uploaded `);
+    } catch (err) {
+		
+	}
 };
 
 exports.getMessage = async (req, res) => {

@@ -26,7 +26,7 @@ function Login() {
     process.env.REACT_APP_CLIENT_ID ||
     "464107833749-6lmogcd5382qg3738a347ggu7nu08fus.apps.googleusercontent.com";
   return (
-    <div classname="loginScreen">
+    <div className="loginScreen">
 	  
 	  <h1 className="loginTitle" >RealTime-ChatApp</h1>
 	  <div className="loginButton">
