@@ -1,6 +1,7 @@
 .loginScreen{
-	margin-top:100px;
-	padding-top:100px;
+	align-items:center;
+	display:flex;
+	flex-direction:column;
 }
 
 
@@ -8,20 +9,16 @@
 .loginTitle{
 	font-size:50px;
 	font-family: 'Arvo', serif;
-	color:lightBlue;
-	margin:23vh 0px 20vh 5px;
+	color:black;
+	margin:100px;
 	text-align:center;
 }
 
 
-
-.loginButton{
-	margin:auto;
-	align-items:center;
-	justify-content:space-around;
-	text-align:center;
-}
 
 .googleLoginButton{
-	margin-left:9vw;
+	align-items:center;
+	text-align:center;
 }
+
+.loginButton:{}

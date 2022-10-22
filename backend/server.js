@@ -13,7 +13,7 @@ require("dotenv").config();
 const messageRouter = require("./routes/messageRoute");
 const roomRouter = require("./routes/roomRoute.js");
 const authRouter = require("./routes/authRoute");
-
+const downloadRouter = require("./routes/downloadRoute.js")
 connectDB();
 
 const port = process.env.PORT || 9000;
@@ -67,7 +67,8 @@ const app = express();
 app.use(
   cors({
     origin: "http://localhost:3000",
-    credentials: true,
+	//origin: "http://10.10.74.202:8080",
+	credentials: true,
   })
 );
 
@@ -116,6 +117,7 @@ app.use((req, res, next) => {
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/room", roomRouter);
 app.use("/api/vi/google", authRouter);
+app.use("/api/v1/download",downloadRouter)
 
 app.listen(port, () => console.log(`Listening on ${port}`));
 

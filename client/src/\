@@ -3,10 +3,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import "./Chat.css";
 
-
 import FormData from "form-data";
-
-let fileType = "";
 
 function Chat({ messages, roomName, roomId, url }) {
     const [input, setInput] = useState("");
@@ -23,90 +20,61 @@ function Chat({ messages, roomName, roomId, url }) {
         setInput("");
     };
 
-    const [state, setState] = useState({ file: null, type: null });
+    const [state, setState] = useState({ file: null, type:null });
 
-    const handleFile = async (event) => {
+    const handleImage = async (event) => {
         event.preventDefault();
-        // const file = event.target.files[0];
-        // const type = fileType;
-        // console.log("type=" + type);
-        setState({ file: event.target.files[0], type: fileType }, () => {
-            console.log("stateFile:", state.file);
-        });
-        console.log("event=" + event.target);
+        let file = event.target.files[0];
+		const type = event.target.name;
+		console.log(type);
+        setState({ file: file, type: "image" }, ()=>{
+			console.log("stateFile:", state.type)
+		});
+		console.log("event="+event.target, file);
+
     };
 
     const handleUpload = async (event) => {
-        console.log("stateFile:", state.type);
+		console.log("stateFile:", state.type);
 
         event.preventDefault();
-        // console.log("fileis:", imageFile);
-        let transferForm = new FormData();
+        let imageFile = state.file;
+        console.log("fileis:", imageFile);
+        let imageForm = new FormData();
 
-        await transferForm.append(state.type, state.file);
-		await transferForm.append("name", userName);
-		await transferForm.append("timestamp", new Date().toISOString())
-		await transferForm.append("received", true)
-        // console.log("form is:", imageForm);
+        await imageForm.append("image", imageFile);
+        console.log("form is:", imageForm);
 
-        if (fileType == "image") {
-            URL = `http://localhost:9000/api/v1/message/${roomId}/uploadFile/image`;
-        } else if (fileType == "video") {
-            URL = `http://localhost:9000/api/v1/message/${roomId}/uploadFile/video`;
-        } else if (fileType == "pdf") {
-            URL = `http://localhost:9000/api/v1/message/${roomId}/uploadFile/pdf`;
+        for (var pair of imageForm.entries()) {
+            console.log("pairIs:" + pair[0] + " " + pair[1]);
         }
-
-        console.log("It is", transferForm.file);
+        console.log(
+            "API=" + `http://localhost:9000/api/v1/message/${roomId}/uploadFile`
+        );
 
         await axios({
-            url: URL,
+            url: `http://localhost:9000/api/v1/message/${roomId}/uploadFile`,
             method: "POST",
-            data: transferForm,
+            data: imageForm,
             name: userName,
+            message: `${imageFile}`,
             timestamp: new Date().toISOString(),
             received: true,
-			
-			
         });
         setState({ file: null });
-        setUploadOpen(!uploadOpen);
-        setOpen(!open);
     };
 
     const [open, setOpen] = React.useState(false);
 
     const handleOpen = () => {
         setOpen(!open);
-        setUploadOpen(!uploadOpen);
         console.log("Pressed");
     };
     const [uploadOpen, setUploadOpen] = React.useState(false);
-    const uploaderOpen = (parameter) => {
-        console.log(parameter);
+    const uploaderOpen = () => {
         setUploadOpen(!uploadOpen);
-        fileType = parameter;
+        console.log("Uploader");
     };
-
-    const handleDownload = (prop) => {
-		console.log("prop=",prop)
-		console.log("http@"+`http://localhost:8080${prop}`)
-		const res = axios({
-            method: "GET",
-            url: `http://10.10.74.202:8080${prop}`,
-            responseType: "stream",
-        })
-		.then((res)=>{
-			const url = window.URL.createObjectURL(new Blob([res.data]))
-			const link = document.createElement('a')
-			link.href = link
-			link.setAttribute('download', 'image.jpg')
-			document.body.appendChild(link)
-			link.click()
-		})
-
-        
-	};
 
     return (
         <div className="chat">
@@ -120,34 +88,28 @@ function Chat({ messages, roomName, roomId, url }) {
                     <i className="fa fa-search"></i>
 
                     <div className="dropdown">
-                        <button className="upload" onClick={handleOpen}>
-                            &#128206;
-                        </button>
+                        <button
+                            className="upload"
+                            onClick={handleOpen}
+                        ></button>
                         {open ? (
                             <ul className="menu">
                                 <li className="menu-item">
                                     <button
+                                        onClick={uploaderOpen}
                                         className="addImage"
-                                        onClick={(e) => uploaderOpen("image")}
                                     >
                                         Add Image
+										
                                     </button>
                                 </li>
                                 <li className="menu-item">
-                                    <button
-                                        onClick={(e) => uploaderOpen("video")}
-                                        className="addVideo"
-                                    >
+                                    <button className="addVideo">
                                         Add Video
                                     </button>
                                 </li>
                                 <li className="menu-item">
-                                    <button
-                                        onClick={(e) => uploaderOpen("pdf")}
-                                        className="addPDF"
-                                    >
-                                        Add PDF
-                                    </button>
+                                    <button className="addPDF">Add PDF</button>
                                 </li>
 
                                 {uploadOpen ? (
@@ -159,13 +121,11 @@ function Chat({ messages, roomName, roomId, url }) {
                                         >
                                             <input
                                                 type={"file"}
-                                                name={`${fileType}`}
-                                                // name="image"
+                                                name="image"
                                                 onChange={(event) =>
-                                                    handleFile(event)
+                                                    handleImage(event)
                                                 }
                                             />
-                                            <h2>{fileType}</h2>
                                             <button
                                                 type="submit"
                                                 onClick={(event) =>
@@ -180,6 +140,7 @@ function Chat({ messages, roomName, roomId, url }) {
                             </ul>
                         ) : null}
                     </div>
+
                     <i className="material-icons">more_vert</i>
                 </div>
             </div>
@@ -194,21 +155,6 @@ function Chat({ messages, roomName, roomId, url }) {
                         >
                             <span className="chat__name">{message.name}</span>
                             {message.message}
-                            <span>
-                                {typeof message.downloadURL != "undefined" ? (
-                                    <a
-                                        onClick={(event) =>
-                                            handleDownload(message.downloadURL)
-                                        }
-                                    >
-                                        Download Here
-                                    </a>
-                                ) : null}
-                                {console.log(
-                                    "downloadLink:",
-                                    message.downloadURL
-                                )}
-                            </span>
                             <span className="chat__timestamp">
                                 {message.timestamp}
                             </span>

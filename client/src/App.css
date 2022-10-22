@@ -1,20 +1,17 @@
 .app {
     display: grid;
-    height: 120vh;
-	/* place-items: center; */
-	background-color:blue;
-	background-image:url("../public/loginBackgroung");
-	background-position:center;
-	background-repeat:no-repeat;
-	background-size:cover;
+    height: 110vh;
+    place-items: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .app__body {
     display: flex;
     background-color: #ededed;
-    margin-top: 20px;
     height: 90vh;
     width: 90vw;
-    margin-top: 1rem;
+    margin-top: 1px;
     box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
     border-radius: 30px;
 }
@@ -30,4 +27,8 @@ Logut {
     margin: 30px;
 }
 
-
+.loginPage{
+	position:relative;
+	top:-100px;
+	left:auto;
+}
