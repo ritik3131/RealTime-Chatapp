@@ -33,7 +33,6 @@ yarn start
 - Full authorization to api and other react pages added.
 - Cover all the concept of react such redux,useState , useEffect etc.
 - You can add different rooms.
-- You can send message in different and different rooms.
 - Message and Room collections are live with the help of pusher.js
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
