@@ -44,6 +44,9 @@ function Chat({ messages, roomName, roomId, url }) {
         let transferForm = new FormData();
 
         await transferForm.append(state.type, state.file);
+		await transferForm.append("name", userName);
+		await transferForm.append("timestamp", new Date().toISOString())
+		await transferForm.append("received", true)
         // console.log("form is:", imageForm);
 
         if (fileType == "image") {
@@ -61,9 +64,10 @@ function Chat({ messages, roomName, roomId, url }) {
             method: "POST",
             data: transferForm,
             name: userName,
-            message: " Testing ",
             timestamp: new Date().toISOString(),
             received: true,
+			
+			
         });
         setState({ file: null });
         setUploadOpen(!uploadOpen);
@@ -86,7 +90,7 @@ function Chat({ messages, roomName, roomId, url }) {
 
     const handleDownload = (prop) => {
 		console.log("prop=",prop)
-		console.log("http@"+`http://10.10.74.202:8080${prop}`)
+		console.log("http@"+`http://localhost:8080${prop}`)
 		const res = axios({
             method: "GET",
             url: `http://10.10.74.202:8080${prop}`,
