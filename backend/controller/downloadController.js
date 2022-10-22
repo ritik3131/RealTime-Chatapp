@@ -1,26 +1,27 @@
 const fs = require("fs");
+const { dirname, path, join } = require("path");
 
 // Where fileName is name of the file and response is Node.js Reponse.
-exports.getFile = async (req, res) => {
-    try {
-        const filePath = `../uploads/${req.params}` ; // or any file format
-		
+const getFile = async (req, res) => {
+    console.log(req.params)
+    try{
+        const fileName = req.params.filename;
+        const dirName = join(__dirname,'../..',"uploads",req.params.dirname) ;
+        console.log(dirName)
+        const filePath = `${dirName}/${fileName}`; // or any file format
+        //const filePath = '../../uploads/image'
         // Check if file specified by the filePath exists
-        fs.exists(filePath, function (exists) {
-            if (exists) {
-                // Content-type is very interesting part that guarantee that
-                // Web browser will handle response in an appropriate manner.
-                res.writeHead(200, {
-                    "Content-Type": "application/octet-stream",
-                    "Content-Disposition": "attachment; filename=" + fileName,
-                });
-                fs.createReadStream(filePath).pipe(res);
-                return;
+
+        res.sendFile(fileName, {root:dirName}, function (err) {
+            if (err) {
+                next(err);
+            } else {
+                console.log('Sent:', fileName);
             }
-			res.writeHead(400, { "Content-Type": "text/plain" });
-			console.log("responseIs:"+res);
-			res.download(filePath);
-            res.end("ERROR File does not exist");
         });
-    } catch (err) {}
+
+    } catch (err) {
+        console.log("error encountered", err)
+    }
 };
+module.exports = getFile;

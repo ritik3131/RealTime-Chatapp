@@ -67,8 +67,8 @@ const app = express();
 app.use(
   cors({
     origin: "http://localhost:3000",
-	//origin: "http://10.10.74.202:8080",
-	credentials: true,
+    //origin: "http://10.10.74.202:8080",
+    credentials: true,
   })
 );
 
@@ -90,10 +90,10 @@ app.use(
     saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URL,
-      collectionName:'sessions'
+      collectionName: 'sessions'
     }),
     cookie: {
-      secure:false,
+      secure: false,
       sameSite: false, // i think this is default to false
       maxAge: 60 * 60 * 1000,
     },
@@ -105,7 +105,7 @@ app.use((req, res, next) => {
   if (!req.session.user) return next();
   User.findById(req.session.user._id)
     .then((user) => {
-      console.log("user",user)
+      console.log("user", user)
       req.user = user;
       next();
     })
@@ -116,8 +116,19 @@ app.use((req, res, next) => {
 
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/room", roomRouter);
-app.use("/api/vi/google", authRouter);
-app.use("/api/v1/download",downloadRouter)
+app.use("/api/v1/google", authRouter);
+app.use("/api/v1/download", (req,res,next)=>{
+  console.log("");
+  console.log("you are in server");
+  next();
+} ,downloadRouter)
+app.get("/api/v0", (_req, _res, next) => {
+  console.log("API V0 Log 1");
+  next();
+}, (_req, res) => {
+  console.log("API V0 Log 2");
+  res.type("txt").send("Hello, World!");
+})
 
 app.listen(port, () => console.log(`Listening on ${port}`));
 
