@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/popper.js": "^1.11.0",
     "axios": "^0.25.0",
+    "fs": "^0.0.1-security",
     "popper.js": "^1.16.1",
     "pusher-js": "^7.0.3",
     "react": "^17.0.2",

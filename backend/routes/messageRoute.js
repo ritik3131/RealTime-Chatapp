@@ -57,8 +57,6 @@ router.post("/:roomId/uploadFile/image",uploadImage.single("image"), uploadFile)
 router.post("/:roomId/uploadFile/video", uploadVideo.single("video"), uploadFile);
 router.post("/:roomId/uploadFile/pdf", uploadPdf.single("pdf"), uploadFile);
 
-console.log("After");
-
 router.get("/:roomId/getMessage", getMessage);
 router.get("/user", getCurrentUser);
 // router.get('/:messageId',getOneMessage);

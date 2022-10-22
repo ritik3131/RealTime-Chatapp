@@ -67,10 +67,8 @@ function App() {
 
     return (
         <div className="app">
-		<div>
-            <div className="loginPage">
-                {!isAuth && <Login />}
-		</div>
+            <div>
+                <div className="loginPage">{!isAuth && <Login />}</div>
                 {isAuth && (
                     <div>
                         {" "}
@@ -90,16 +88,16 @@ function App() {
                                 <Starter />
                             )}
                         </div>
-                        <footer>
-                            <p>Author: Ritik Gupta </p>
-                            <p>
-                                <a href="https://github.com/ritik3131/RealTime-Chatapp">
-                                    GithubRepo
-                                </a>
-                            </p>
-                        </footer>
                     </div>
                 )}
+                <footer>
+                    <p>Author: Ritik Gupta </p>
+                    <p>
+                        <a href="https://github.com/ritik3131/RealTime-Chatapp">
+                            GithubRepo
+                        </a>
+                    </p>
+                </footer>
             </div>
         </div>
     );

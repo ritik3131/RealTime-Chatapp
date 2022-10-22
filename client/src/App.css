@@ -2,7 +2,6 @@
     display: grid;
     height: 110vh;
     place-items: center;
-    background-image: url("../public/loginBackgroung");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -29,7 +28,7 @@ Logut {
 }
 
 .loginPage{
-	position:absolute;
-	top:4vh;
-	left:32vw;
+	position:relative;
+	top:-100px;
+	left:auto;
 }

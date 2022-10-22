@@ -20,9 +20,12 @@ exports.postMessage = async (req, res) => {
 exports.uploadFile = async (req, res) => {
     try {
 
-		// console.log("backend:",req.file);
+		console.log("backend:",req.file.filename);
         const roomId = req.params.roomId;
-        const messageBody = new messageModel(req.body);
+		let body = req.body
+		body.message=req.file.filename
+		body.downloadURL=`/api/v1/download/${req.file.fieldname}/${req.file.filename}`
+        const messageBody = new messageModel(body);
         await messageBody.save();
         const room = await roomModel.findById(roomId);
         room.roomName.messages.push(messageBody);
