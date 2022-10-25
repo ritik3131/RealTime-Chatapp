@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import "./Chat.css";
 
+import { fileDownload } from 'js-file-download';
 
 import FormData from "form-data";
 
@@ -90,20 +91,36 @@ function Chat({ messages, roomName, roomId, url }) {
 
     const handleDownload = (prop) => {
 		console.log("prop=",prop)
-		console.log("http@"+`http://localhost:8080${prop}`)
-		const res = axios({
-            method: "GET",
-            url: `http://10.10.74.202:8080${prop}`,
-            responseType: "stream",
-        })
-		.then((res)=>{
-			const url = window.URL.createObjectURL(new Blob([res.data]))
-			const link = document.createElement('a')
-			link.href = link
-			link.setAttribute('download', 'image.jpg')
-			document.body.appendChild(link)
-			link.click()
-		})
+		console.log("http@"+`http://localhost:9000${prop}`)
+		
+
+        axios({
+            url: `http://localhost:9000${prop}`,
+            method: 'GET',
+            responseType: 'blob', // Important
+          }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'fileDownload'); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+        });
+      
+        
+        // const res = axios({
+        //     method: "GET",
+        //     url: `http://localhost:9000${prop}`,
+        //     responseType: "blob",
+        // })
+		// .then((res)=>{
+		// 	const url = window.URL.createObjectURL(new Blob([res.data]))
+		// 	const link = document.createElement('a')
+		// 	link.href = link
+		// 	link.setAttribute('download', 'image.jpg')
+		// 	document.body.appendChild(link)
+		// 	link.click()
+		// })
 
         
 	};
